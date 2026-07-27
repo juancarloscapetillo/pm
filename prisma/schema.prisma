@@ -1,0 +1,447 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  DIRECCION
+  GERENTE_PROYECTOS
+  CONTROL_OBRA
+  RESIDENTE
+  GARANTIAS
+}
+
+enum ProjectStatus {
+  PLANEACION
+  PRECONSTRUCCION
+  EN_CONSTRUCCION
+  EN_ENTREGA
+  GARANTIAS
+  TERMINADO
+  PAUSADO
+}
+
+enum Priority {
+  BAJA
+  MEDIA
+  ALTA
+  CRITICA
+}
+
+enum TaskStatus {
+  PENDIENTE
+  EN_PROCESO
+  EN_REVISION
+  BLOQUEADA
+  TERMINADA
+  CANCELADA
+}
+
+enum WorkActivityStatus {
+  SIN_INICIAR
+  EN_PROCESO
+  EN_REVISION
+  BLOQUEADA
+  TERMINADA
+  RETRASADA
+}
+
+enum IncidentCategory {
+  CALIDAD
+  SEGURIDAD
+  RETRASO
+  MATERIALES
+  CONTRATISTA
+  PROYECTO_EJECUTIVO
+  INSTALACIONES
+  PRESUPUESTO
+  OTRO
+}
+
+enum IncidentStatus {
+  ABIERTA
+  EN_REVISION
+  ASIGNADA
+  EN_PROCESO
+  RESUELTA
+  CERRADA
+}
+
+enum WarrantyStatus {
+  RECIBIDA
+  EN_REVISION
+  VISITA_PROGRAMADA
+  ASIGNADA
+  EN_REPARACION
+  PENDIENTE_VALIDACION
+  CERRADA
+  RECHAZADA
+}
+
+enum EntityType {
+  PROJECT
+  TASK
+  WORK_ACTIVITY
+  INCIDENT
+  WARRANTY
+}
+
+enum ReviewKind {
+  REVISION
+  AUTORIZACION
+  INFORMACION
+}
+
+enum ReviewStatus {
+  PENDIENTE
+  APROBADA
+  RECHAZADA
+}
+
+enum NotificationType {
+  NUEVA_TAREA
+  NUEVA_INCIDENCIA
+  NUEVA_GARANTIA
+  CAMBIO_FECHA
+  PROXIMO_VENCER
+  VENCIDO
+  MENCION
+  SOLICITUD_REVISION
+  RECHAZO
+  ARCHIVO_COMENTARIO
+  CAMBIO_ESTATUS
+  DEPENDENCIA_TERMINADA
+  BLOQUEADA
+  EVIDENCIA_REQUERIDA
+  ESCALAMIENTO
+  SIN_ACTUALIZACION
+}
+
+model User {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  passwordHash   String
+  role           Role     @default(RESIDENTE)
+  active         Boolean  @default(true)
+  managerId      String?
+  manager        User?    @relation("Manager", fields: [managerId], references: [id], onDelete: SetNull)
+  reports        User[]   @relation("Manager")
+  createdAt      DateTime @default(now())
+
+  managedProjects     Project[]        @relation("ProjectManager")
+  projectMemberships  ProjectMember[]
+  workActivities      WorkActivity[]   @relation("ActivityResponsible")
+  tasksResponsible    Task[]           @relation("TaskResponsible")
+  tasksCreated        Task[]           @relation("TaskCreatedBy")
+  tasksClosed         Task[]           @relation("TaskClosedBy")
+  taskParticipations  TaskParticipant[]
+  incidentsReported   Incident[]       @relation("IncidentReportedBy")
+  incidentsResponsible Incident[]      @relation("IncidentResponsible")
+  warrantiesResponsible Warranty[]     @relation("WarrantyResponsible")
+  comments            Comment[]
+  mentions            CommentMention[]
+  attachments         Attachment[]
+  notifications       Notification[]
+  reviewRequestsFor   ReviewRequest[]  @relation("ReviewAssignedTo")
+  reviewRequestsBy    ReviewRequest[]  @relation("ReviewRequestedBy")
+}
+
+model Project {
+  id                String        @id @default(cuid())
+  name              String        @unique
+  location          String?
+  type              String?
+  unitsCount        Int?
+  startDate         DateTime?
+  estimatedEndDate  DateTime?
+  managerId         String?
+  manager           User?         @relation("ProjectManager", fields: [managerId], references: [id], onDelete: SetNull)
+  budgetTotal       Float?
+  status            ProjectStatus @default(PLANEACION)
+  progressPlanned   Float         @default(0)
+  progressReal      Float         @default(0)
+  description       String?
+  isDemo            Boolean       @default(false)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  members        ProjectMember[]
+  workActivities WorkActivity[]
+  tasks          Task[]
+  incidents      Incident[]
+  warranties     Warranty[]
+  budgetLines    BudgetLine[]
+  attachments    Attachment[]
+  comments       Comment[]
+  reviewRequests ReviewRequest[]
+  notifications  Notification[]
+}
+
+model ProjectMember {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roleLabel String?
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, userId])
+}
+
+model WorkActivity {
+  id                String              @id @default(cuid())
+  projectId         String
+  project           Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  stage             String
+  partida           String
+  name              String
+  responsibleId     String?
+  responsible       User?               @relation("ActivityResponsible", fields: [responsibleId], references: [id], onDelete: SetNull)
+  plannedStart      DateTime
+  plannedEnd        DateTime
+  actualStart       DateTime?
+  actualEnd         DateTime?
+  progressPercent   Float               @default(0)
+  priority          Priority            @default(MEDIA)
+  status            WorkActivityStatus  @default(SIN_INICIAR)
+  dependsOnId       String?
+  dependsOn         WorkActivity?       @relation("ActivityDependency", fields: [dependsOnId], references: [id], onDelete: SetNull)
+  dependents        WorkActivity[]      @relation("ActivityDependency")
+  delayReason       String?
+  nextAction        String?
+  lastUpdatedAt     DateTime            @default(now())
+  isDemo            Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  attachments    Attachment[]
+  comments       Comment[]
+  reviewRequests ReviewRequest[]
+}
+
+model Task {
+  id                String     @id @default(cuid())
+  title             String
+  description       String?
+  projectId         String?
+  project           Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  category          String?
+  responsibleId     String?
+  responsible       User?      @relation("TaskResponsible", fields: [responsibleId], references: [id], onDelete: SetNull)
+  createdById       String?
+  createdBy         User?      @relation("TaskCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  priority          Priority   @default(MEDIA)
+  dueDate           DateTime?
+  status            TaskStatus @default(PENDIENTE)
+  parentTaskId      String?
+  parentTask        Task?      @relation("Subtasks", fields: [parentTaskId], references: [id], onDelete: SetNull)
+  subtasks          Task[]     @relation("Subtasks")
+  dependsOnId       String?
+  dependsOn         Task?      @relation("TaskDependency", fields: [dependsOnId], references: [id], onDelete: SetNull)
+  dependents        Task[]     @relation("TaskDependency")
+  completionEvidence String?
+  closedById        String?
+  closedBy          User?      @relation("TaskClosedBy", fields: [closedById], references: [id], onDelete: SetNull)
+  closedAt          DateTime?
+  rejectedReason    String?
+  lastUpdatedAt     DateTime   @default(now())
+  isDemo            Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  participants   TaskParticipant[]
+  attachments    Attachment[]
+  comments       Comment[]
+  reviewRequests ReviewRequest[]
+}
+
+model TaskParticipant {
+  id     String @id @default(cuid())
+  taskId String
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, userId])
+}
+
+model Incident {
+  id             String           @id @default(cuid())
+  folio          String           @unique
+  projectId      String
+  project        Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  location       String?
+  reportedAt     DateTime         @default(now())
+  reportedById   String?
+  reportedBy     User?            @relation("IncidentReportedBy", fields: [reportedById], references: [id], onDelete: SetNull)
+  type           IncidentCategory @default(OTRO)
+  description    String
+  priority       Priority         @default(MEDIA)
+  responsibleId  String?
+  responsible    User?            @relation("IncidentResponsible", fields: [responsibleId], references: [id], onDelete: SetNull)
+  contractorName String?
+  dueDate        DateTime?
+  status         IncidentStatus   @default(ABIERTA)
+  solution       String?
+  estimatedCost  Float?
+  closedAt       DateTime?
+  lastUpdatedAt  DateTime         @default(now())
+  isDemo         Boolean          @default(false)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  attachments    Attachment[]
+  comments       Comment[]
+  reviewRequests ReviewRequest[]
+}
+
+model Warranty {
+  id              String         @id @default(cuid())
+  folio           String         @unique
+  projectId       String
+  project         Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  unit            String
+  ownerName       String
+  ownerContact    String?
+  deliveryDate    DateTime?
+  reportedAt      DateTime       @default(now())
+  description     String
+  category        String?
+  urgency         Priority       @default(MEDIA)
+  responsibleId   String?
+  responsible     User?          @relation("WarrantyResponsible", fields: [responsibleId], references: [id], onDelete: SetNull)
+  contractorName  String?
+  visitDate       DateTime?
+  dueDate         DateTime?
+  status          WarrantyStatus @default(RECIBIDA)
+  repairCost      Float?
+  clientConfirmed Boolean        @default(false)
+  closedAt        DateTime?
+  lastUpdatedAt   DateTime       @default(now())
+  isDemo          Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  attachments Attachment[]
+}
+
+model BudgetLine {
+  id                String   @id @default(cuid())
+  projectId         String
+  project           Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  stage             String
+  partida           String
+  subpartida        String?
+  contractor        String?
+  authorizedAmount  Float    @default(0)
+  updatedAmount     Float    @default(0)
+  contractedAmount  Float    @default(0)
+  executedAmount    Float    @default(0)
+  isDemo            Boolean  @default(false)
+  createdAt         DateTime @default(now())
+}
+
+model Comment {
+  id         String     @id @default(cuid())
+  entityType EntityType
+  taskId         String?
+  task           Task?         @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  workActivityId String?
+  workActivity   WorkActivity? @relation(fields: [workActivityId], references: [id], onDelete: Cascade)
+  incidentId     String?
+  incident       Incident?     @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  projectId      String?
+  project        Project?      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  authorId   String?
+  author     User?      @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  body       String
+  createdAt  DateTime   @default(now())
+
+  mentions CommentMention[]
+}
+
+model CommentMention {
+  id           String   @id @default(cuid())
+  commentId    String
+  comment      Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  acknowledged Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model ReviewRequest {
+  id             String       @id @default(cuid())
+  entityType     EntityType
+  taskId         String?
+  task           Task?        @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  workActivityId String?
+  workActivity   WorkActivity? @relation(fields: [workActivityId], references: [id], onDelete: Cascade)
+  incidentId     String?
+  incident       Incident?    @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  projectId      String?
+  project        Project?     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  kind           ReviewKind   @default(REVISION)
+  reason         String?
+  requestedById  String?
+  requestedBy    User?        @relation("ReviewRequestedBy", fields: [requestedById], references: [id], onDelete: SetNull)
+  assignedToId   String?
+  assignedTo     User?        @relation("ReviewAssignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
+  status         ReviewStatus @default(PENDIENTE)
+  dueDate        DateTime?
+  createdAt      DateTime     @default(now())
+  resolvedAt     DateTime?
+}
+
+model Attachment {
+  id             String        @id @default(cuid())
+  entityType     EntityType
+  projectId      String?
+  project        Project?      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  taskId         String?
+  task           Task?         @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  workActivityId String?
+  workActivity   WorkActivity? @relation(fields: [workActivityId], references: [id], onDelete: Cascade)
+  incidentId     String?
+  incident       Incident?     @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  warrantyId     String?
+  warranty       Warranty?     @relation(fields: [warrantyId], references: [id], onDelete: Cascade)
+  filename       String
+  mimeType       String
+  size           Int
+  data           Bytes
+  uploadedById   String?
+  uploadedBy     User?         @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt      DateTime      @default(now())
+}
+
+model Notification {
+  id                  String            @id @default(cuid())
+  userId              String
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type                NotificationType
+  title               String
+  message             String
+  priority            Priority          @default(MEDIA)
+  projectId           String?
+  project             Project?          @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  entityType          EntityType?
+  entityId            String?
+  entityLabel         String?
+  relatedResponsibleName String?
+  read                Boolean           @default(false)
+  readAt              DateTime?
+  escalationLevel     Int               @default(0)
+  createdAt           DateTime          @default(now())
+}
+
+model Setting {
+  key   String @id
+  value String
+}
