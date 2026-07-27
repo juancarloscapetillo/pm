@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { PageHeader, PriorityBadge } from "@/components/ui";
 import { warrantyStatusLabels } from "@/lib/labels";
-import { formatDaysLabel } from "@/lib/dueStatus";
+import { formatDaysLabel, toDateInputValue } from "@/lib/dueStatus";
 
 interface Member {
   id: string;
@@ -88,7 +88,7 @@ export default function WarrantyDetailView({ warranty, users }: { warranty: Warr
               <input
                 type="date"
                 className="input"
-                defaultValue={warranty.dueDate ? warranty.dueDate.slice(0, 10) : ""}
+                defaultValue={toDateInputValue(warranty.dueDate)}
                 onChange={(e) => updateField({ dueDate: e.target.value || null })}
               />
               <p className="text-xs text-gray-400 mt-1">{formatDaysLabel(warranty.dueDate)}</p>
@@ -110,7 +110,7 @@ export default function WarrantyDetailView({ warranty, users }: { warranty: Warr
               <input
                 type="date"
                 className="input"
-                defaultValue={warranty.visitDate ? warranty.visitDate.slice(0, 10) : ""}
+                defaultValue={toDateInputValue(warranty.visitDate)}
                 onChange={(e) => updateField({ visitDate: e.target.value || null })}
               />
             </div>

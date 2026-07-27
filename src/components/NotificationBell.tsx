@@ -49,7 +49,11 @@ export default function NotificationBell() {
   useEffect(() => {
     load();
     const interval = setInterval(load, 30000);
-    return () => clearInterval(interval);
+    window.addEventListener("pm:notifications-changed", load);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("pm:notifications-changed", load);
+    };
   }, [load]);
 
   useEffect(() => {
@@ -64,6 +68,7 @@ export default function NotificationBell() {
     setItems((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
     setUnreadCount((c) => Math.max(0, c - 1));
     await fetch(`/api/notifications/${id}`, { method: "PATCH", body: JSON.stringify({ read: true }) });
+    window.dispatchEvent(new Event("pm:notifications-changed"));
   }
 
   return (

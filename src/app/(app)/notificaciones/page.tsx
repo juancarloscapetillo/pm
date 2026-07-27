@@ -58,11 +58,13 @@ export default function NotificationsPage() {
   async function markRead(id: string) {
     setItems((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
     await fetch(`/api/notifications/${id}`, { method: "PATCH", body: JSON.stringify({ read: true }) });
+    window.dispatchEvent(new Event("pm:notifications-changed"));
   }
 
   async function markAllRead() {
     setItems((prev) => prev.map((n) => ({ ...n, read: true })));
     await fetch("/api/notifications/read-all", { method: "POST" });
+    window.dispatchEvent(new Event("pm:notifications-changed"));
   }
 
   const filtered = useMemo(() => {

@@ -7,7 +7,7 @@ import { PageHeader, PriorityBadge } from "@/components/ui";
 import CommentsThread from "@/components/CommentsThread";
 import ReviewRequestPanel from "@/components/ReviewRequestPanel";
 import { incidentStatusLabels, incidentCategoryLabels } from "@/lib/labels";
-import { formatDaysLabel } from "@/lib/dueStatus";
+import { formatDaysLabel, toDateInputValue } from "@/lib/dueStatus";
 
 interface Member {
   id: string;
@@ -99,7 +99,7 @@ export default function IncidentDetailView({
                 <input
                   type="date"
                   className="input"
-                  defaultValue={incident.dueDate ? incident.dueDate.slice(0, 10) : ""}
+                  defaultValue={toDateInputValue(incident.dueDate)}
                   onChange={(e) => updateField({ dueDate: e.target.value || null })}
                 />
                 <p className="text-xs text-gray-400 mt-1">{formatDaysLabel(incident.dueDate)}</p>

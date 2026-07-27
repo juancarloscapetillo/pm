@@ -8,6 +8,7 @@ import { PageHeader, PriorityBadge } from "@/components/ui";
 import CommentsThread from "@/components/CommentsThread";
 import ReviewRequestPanel from "@/components/ReviewRequestPanel";
 import { taskStatusLabels } from "@/lib/labels";
+import { toDateInputValue } from "@/lib/dueStatus";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -117,7 +118,7 @@ export default function TaskDetailView({
                 <input
                   type="date"
                   className="input"
-                  defaultValue={task.dueDate ? task.dueDate.slice(0, 10) : ""}
+                  defaultValue={toDateInputValue(task.dueDate)}
                   onChange={(e) => updateField({ dueDate: e.target.value || null })}
                 />
               </div>

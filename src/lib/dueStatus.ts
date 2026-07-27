@@ -38,6 +38,13 @@ export const alertColors: Record<AlertStatus, string> = {
   gray: "#9CA3AF",
 };
 
+/** Server components can hand Client Components a real Date object (RSC serializes it),
+ * so callers can't assume dueDate is already an ISO string — always go through `new Date()`. */
+export function toDateInputValue(date: Date | string | null | undefined): string {
+  if (!date) return "";
+  return new Date(date).toISOString().slice(0, 10);
+}
+
 export function formatDaysLabel(dueDate: Date | string | null | undefined): string {
   const d = daysRemaining(dueDate);
   if (d === null) return "Sin fecha";

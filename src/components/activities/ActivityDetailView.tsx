@@ -8,7 +8,7 @@ import { PageHeader, PriorityBadge, ProgressBar } from "@/components/ui";
 import CommentsThread from "@/components/CommentsThread";
 import ReviewRequestPanel from "@/components/ReviewRequestPanel";
 import { workActivityStatusLabels } from "@/lib/labels";
-import { formatDaysLabel } from "@/lib/dueStatus";
+import { formatDaysLabel, toDateInputValue } from "@/lib/dueStatus";
 
 interface Member {
   id: string;
@@ -105,7 +105,7 @@ export default function ActivityDetailView({
                 <input
                   type="date"
                   className="input"
-                  defaultValue={activity.plannedEnd.slice(0, 10)}
+                  defaultValue={toDateInputValue(activity.plannedEnd)}
                   onChange={(e) => updateField({ plannedEnd: e.target.value })}
                 />
                 <p className="text-xs text-gray-400 mt-1">{formatDaysLabel(activity.plannedEnd)}</p>
