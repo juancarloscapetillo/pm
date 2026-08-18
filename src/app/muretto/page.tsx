@@ -408,8 +408,8 @@ export default function MurettoPage() {
                 src="/muretto/logo/muretto-logo.png"
                 alt="Muretto"
                 width={130}
-                height={36}
-                className="h-8 w-auto brightness-0 invert opacity-90"
+                height={46}
+                className="h-7 w-auto brightness-0 invert opacity-90"
               />
               <p className="text-white/50 text-sm mt-4 max-w-xs">
                 Temozón Norte, Mérida, Yucatán. Un desarrollo de Desarrolladora Calume.

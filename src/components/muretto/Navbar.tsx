@@ -25,8 +25,8 @@ export default function Navbar() {
               src="/muretto/logo/muretto-logo.png"
               alt="Muretto"
               width={140}
-              height={40}
-              className="h-8 lg:h-9 w-auto brightness-0 invert"
+              height={49}
+              className="h-7 lg:h-8 w-auto brightness-0 invert"
               priority
             />
           </a>
