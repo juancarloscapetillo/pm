@@ -12,10 +12,6 @@ body {
   height: 100%;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   @apply bg-gray-50 text-gray-900;
 }
@@ -32,12 +28,6 @@ body {
   }
   .btn-secondary {
     @apply btn bg-white text-calume-navy border border-gray-200 hover:bg-gray-50;
-  }
-  .btn-muretto {
-    @apply btn bg-muretto-camel text-white font-semibold hover:bg-muretto-camelDark;
-  }
-  .btn-muretto-outline {
-    @apply btn bg-transparent text-white border border-white/40 hover:bg-white/10;
   }
   .btn-danger {
     @apply btn bg-red-50 text-red-600 border border-red-200 hover:bg-red-100;
