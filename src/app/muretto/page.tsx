@@ -110,9 +110,9 @@ export default function MurettoPage() {
           priority
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-calume-navy via-calume-navy/60 to-calume-navy/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-muretto-navy via-muretto-navy/60 to-muretto-navy/20" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 lg:pb-24 w-full">
-          <p className="text-calume-gold text-sm font-semibold tracking-[0.2em] uppercase mb-4">
+          <p className="text-muretto-camel text-sm font-semibold tracking-[0.2em] uppercase mb-4">
             Temozón Norte · Mérida, Yucatán
           </p>
           <h1 className="text-white font-extrabold text-5xl sm:text-6xl lg:text-7xl tracking-tight">
@@ -126,7 +126,7 @@ export default function MurettoPage() {
             crecimiento de Mérida.
           </p>
           <div className="flex flex-wrap gap-3 mt-8">
-            <a href="#contacto" className="btn-gold px-6 py-3 text-base">
+            <a href="#contacto" className="btn-muretto px-6 py-3 text-base">
               Habla con un asesor
             </a>
             <a
@@ -170,10 +170,10 @@ export default function MurettoPage() {
             />
           </div>
           <div>
-            <p className="text-calume-gold text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+            <p className="text-muretto-camel text-sm font-semibold tracking-[0.2em] uppercase mb-3">
               El proyecto
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-calume-navy leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-bold text-muretto-navy leading-tight">
               Un nuevo estándar de vida en Temozón Norte
             </h2>
             <p className="text-gray-600 mt-5 leading-relaxed">
@@ -185,7 +185,7 @@ export default function MurettoPage() {
             <ul className="mt-8 space-y-3">
               {EQUIPAMIENTO.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm text-gray-700">
-                  <CheckCircle2 size={18} className="text-calume-gold flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 size={18} className="text-muretto-camel flex-shrink-0 mt-0.5" />
                   {item}
                 </li>
               ))}
@@ -195,20 +195,20 @@ export default function MurettoPage() {
       </section>
 
       {/* AMENIDADES */}
-      <section id="amenidades" className="scroll-mt-20 bg-gray-50 py-20 lg:py-28">
+      <section id="amenidades" className="scroll-mt-20 bg-muretto-cream py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="order-2 lg:order-1">
-              <p className="text-calume-goldDark text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+              <p className="text-muretto-camelDark text-sm font-semibold tracking-[0.2em] uppercase mb-3">
                 Amenidades
               </p>
-              <h2 className="text-3xl sm:text-4xl font-bold text-calume-navy leading-tight mb-8">
+              <h2 className="text-3xl sm:text-4xl font-bold text-muretto-navy leading-tight mb-8">
                 Todo lo que necesitas, sin salir de casa
               </h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {AMENIDADES.map(({ icon: Icon, label }) => (
                   <div key={label} className="card flex items-center gap-3 p-4">
-                    <span className="flex items-center justify-center h-10 w-10 rounded-full bg-calume-navy/5 text-calume-navy flex-shrink-0">
+                    <span className="flex items-center justify-center h-10 w-10 rounded-full bg-muretto-navy/5 text-muretto-navy flex-shrink-0">
                       <Icon size={20} />
                     </span>
                     <span className="text-sm font-medium text-gray-800">{label}</span>
@@ -230,10 +230,10 @@ export default function MurettoPage() {
 
       {/* GALERÍA */}
       <section id="galeria" className="scroll-mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-        <p className="text-calume-gold text-sm font-semibold tracking-[0.2em] uppercase mb-3 text-center">
+        <p className="text-muretto-camel text-sm font-semibold tracking-[0.2em] uppercase mb-3 text-center">
           Galería
         </p>
-        <h2 className="text-3xl sm:text-4xl font-bold text-calume-navy leading-tight text-center mb-12">
+        <h2 className="text-3xl sm:text-4xl font-bold text-muretto-navy leading-tight text-center mb-12">
           Conoce Muretto
         </h2>
         <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
@@ -251,9 +251,9 @@ export default function MurettoPage() {
       </section>
 
       {/* MODELOS */}
-      <section id="modelos" className="scroll-mt-20 bg-calume-navy py-20 lg:py-28">
+      <section id="modelos" className="scroll-mt-20 bg-muretto-navy py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-calume-gold text-sm font-semibold tracking-[0.2em] uppercase mb-3 text-center">
+          <p className="text-muretto-camel text-sm font-semibold tracking-[0.2em] uppercase mb-3 text-center">
             Modelos
           </p>
           <h2 className="text-3xl sm:text-4xl font-bold text-white leading-tight text-center mb-4">
@@ -266,8 +266,8 @@ export default function MurettoPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {MODELOS.map((m) => (
               <div key={m.nombre} className="bg-white rounded-xl2 p-7 flex flex-col">
-                <Building2 className="text-calume-gold" size={28} />
-                <h3 className="text-xl font-bold text-calume-navy mt-4">{m.nombre}</h3>
+                <Building2 className="text-muretto-camel" size={28} />
+                <h3 className="text-xl font-bold text-muretto-navy mt-4">{m.nombre}</h3>
                 <div className="flex items-center gap-4 mt-3 text-sm text-gray-500">
                   <span className="flex items-center gap-1.5">
                     <Bed size={16} /> {m.recamaras}
@@ -290,10 +290,10 @@ export default function MurettoPage() {
       <section id="ubicacion" className="scroll-mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div>
-            <p className="text-calume-gold text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+            <p className="text-muretto-camel text-sm font-semibold tracking-[0.2em] uppercase mb-3">
               Ubicación
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-calume-navy leading-tight mb-5">
+            <h2 className="text-3xl sm:text-4xl font-bold text-muretto-navy leading-tight mb-5">
               En el corazón de Temozón Norte
             </h2>
             <p className="text-gray-600 leading-relaxed mb-8">
@@ -303,7 +303,7 @@ export default function MurettoPage() {
             <div className="grid grid-cols-2 gap-x-6 gap-y-3">
               {CERCANIAS.map((lugar) => (
                 <div key={lugar} className="flex items-center gap-2 text-sm text-gray-700">
-                  <MapPin size={15} className="text-calume-gold flex-shrink-0" />
+                  <MapPin size={15} className="text-muretto-camel flex-shrink-0" />
                   {lugar}
                 </div>
               ))}
@@ -322,12 +322,12 @@ export default function MurettoPage() {
       </section>
 
       {/* ESQUEMA DE PAGO */}
-      <section className="bg-gray-50 py-20 lg:py-28">
+      <section className="bg-muretto-cream py-20 lg:py-28">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-calume-goldDark text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+          <p className="text-muretto-camelDark text-sm font-semibold tracking-[0.2em] uppercase mb-3">
             Esquema de pago
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-calume-navy leading-tight mb-14">
+          <h2 className="text-3xl sm:text-4xl font-bold text-muretto-navy leading-tight mb-14">
             Invertir en Muretto es simple
           </h2>
           <div className="grid sm:grid-cols-3 gap-6">
@@ -337,8 +337,8 @@ export default function MurettoPage() {
               { paso: "03", titulo: "Saldo", detalle: "El resto contra entrega, a la firma de escritura." },
             ].map((p) => (
               <div key={p.paso} className="card p-8">
-                <div className="text-calume-gold text-4xl font-extrabold">{p.paso}</div>
-                <h3 className="text-lg font-bold text-calume-navy mt-3">{p.titulo}</h3>
+                <div className="text-muretto-camel text-4xl font-extrabold">{p.paso}</div>
+                <h3 className="text-lg font-bold text-muretto-navy mt-3">{p.titulo}</h3>
                 <p className="text-sm text-gray-500 mt-2">{p.detalle}</p>
               </div>
             ))}
@@ -351,10 +351,10 @@ export default function MurettoPage() {
       <section id="contacto" className="scroll-mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           <div>
-            <p className="text-calume-gold text-sm font-semibold tracking-[0.2em] uppercase mb-3">
+            <p className="text-muretto-camel text-sm font-semibold tracking-[0.2em] uppercase mb-3">
               Contacto
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-calume-navy leading-tight mb-5">
+            <h2 className="text-3xl sm:text-4xl font-bold text-muretto-navy leading-tight mb-5">
               Agenda tu cita en sala de ventas
             </h2>
             <p className="text-gray-600 leading-relaxed mb-8">
@@ -366,27 +366,27 @@ export default function MurettoPage() {
                 href="https://wa.me/529999473074"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-gray-700 hover:text-calume-navy transition-colors"
+                className="flex items-center gap-3 text-gray-700 hover:text-muretto-navy transition-colors"
               >
-                <span className="flex items-center justify-center h-10 w-10 rounded-full bg-calume-navy/5 text-calume-navy">
+                <span className="flex items-center justify-center h-10 w-10 rounded-full bg-muretto-navy/5 text-muretto-navy">
                   <MessageCircle size={18} />
                 </span>
                 999 947 3074
               </a>
               <a
                 href="mailto:calumemx@gmail.com"
-                className="flex items-center gap-3 text-gray-700 hover:text-calume-navy transition-colors"
+                className="flex items-center gap-3 text-gray-700 hover:text-muretto-navy transition-colors"
               >
-                <span className="flex items-center justify-center h-10 w-10 rounded-full bg-calume-navy/5 text-calume-navy">
+                <span className="flex items-center justify-center h-10 w-10 rounded-full bg-muretto-navy/5 text-muretto-navy">
                   <Mail size={18} />
                 </span>
                 calumemx@gmail.com
               </a>
               <a
                 href="tel:+529999473074"
-                className="flex items-center gap-3 text-gray-700 hover:text-calume-navy transition-colors"
+                className="flex items-center gap-3 text-gray-700 hover:text-muretto-navy transition-colors"
               >
-                <span className="flex items-center justify-center h-10 w-10 rounded-full bg-calume-navy/5 text-calume-navy">
+                <span className="flex items-center justify-center h-10 w-10 rounded-full bg-muretto-navy/5 text-muretto-navy">
                   <Phone size={18} />
                 </span>
                 +52 999 947 3074
@@ -400,7 +400,7 @@ export default function MurettoPage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-calume-navyDark">
+      <footer className="bg-muretto-navyDark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8">
             <div>

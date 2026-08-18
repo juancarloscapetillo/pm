@@ -30,7 +30,7 @@ export default function ContactForm() {
           <label className="label">Nombre</label>
           <input
             required
-            className="input"
+            className="input focus:ring-muretto-navy/30 focus:border-muretto-navy"
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             placeholder="Tu nombre"
@@ -41,7 +41,7 @@ export default function ContactForm() {
           <input
             required
             type="tel"
-            className="input"
+            className="input focus:ring-muretto-navy/30 focus:border-muretto-navy"
             value={telefono}
             onChange={(e) => setTelefono(e.target.value)}
             placeholder="999 000 0000"
@@ -50,7 +50,7 @@ export default function ContactForm() {
       </div>
       <div>
         <label className="label">Me interesa</label>
-        <select className="input" value={interes} onChange={(e) => setInteres(e.target.value)}>
+        <select className="input focus:ring-muretto-navy/30 focus:border-muretto-navy" value={interes} onChange={(e) => setInteres(e.target.value)}>
           <option>1 recámara</option>
           <option>2 recámaras</option>
           <option>Aún no lo sé</option>
@@ -59,14 +59,14 @@ export default function ContactForm() {
       <div>
         <label className="label">Mensaje (opcional)</label>
         <textarea
-          className="input"
+          className="input focus:ring-muretto-navy/30 focus:border-muretto-navy"
           rows={3}
           value={mensaje}
           onChange={(e) => setMensaje(e.target.value)}
           placeholder="Cuéntanos qué buscas..."
         />
       </div>
-      <button type="submit" className="btn-gold w-full">
+      <button type="submit" className="btn-muretto w-full">
         <MessageCircle size={18} />
         Enviar por WhatsApp
       </button>

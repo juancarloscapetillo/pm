@@ -17,7 +17,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-calume-navy/95 backdrop-blur supports-[backdrop-filter]:bg-calume-navy/80 border-b border-white/10">
+    <header className="fixed top-0 inset-x-0 z-50 bg-muretto-navy/95 backdrop-blur supports-[backdrop-filter]:bg-muretto-navy/80 border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <a href="#top" className="flex items-center gap-2 flex-shrink-0">
@@ -44,7 +44,7 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden lg:block">
-            <a href="#contacto" className="btn-gold">
+            <a href="#contacto" className="btn-muretto">
               Agenda tu cita
             </a>
           </div>
@@ -60,7 +60,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-white/10 bg-calume-navy">
+        <div className="lg:hidden border-t border-white/10 bg-muretto-navy">
           <nav className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
             {LINKS.map((link) => (
               <a
@@ -72,7 +72,7 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            <a href="#contacto" onClick={() => setOpen(false)} className="btn-gold mt-2 justify-center">
+            <a href="#contacto" onClick={() => setOpen(false)} className="btn-muretto mt-2 justify-center">
               Agenda tu cita
             </a>
           </nav>
