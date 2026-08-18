@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Muretto — Tu vida, tu espacio",
     description: "70 nuevos departamentos de 1 y 2 recámaras en Temozón Norte, Mérida, Yucatán.",
-    images: ["/muretto/renders/hero-fachada.jpg"],
+    images: ["/muretto/renders/hero-entrada.jpg"],
   },
 };
 
@@ -90,12 +90,9 @@ const EQUIPAMIENTO = [
 const OTROS_PROYECTOS = ["Atrium", "Sieben", "Canova", "Magnolia", "Agua Nativa"];
 
 const GALERIA = [
-  { src: "/muretto/renders/hero-fachada.jpg", alt: "Fachada principal de Muretto" },
-  { src: "/muretto/renders/alberca-rooftop.jpg", alt: "Alberca y roof top de Muretto" },
-  { src: "/muretto/renders/interior-sala.jpg", alt: "Sala de un departamento Muretto" },
-  { src: "/muretto/renders/interior-recamara.jpg", alt: "Recámara de un departamento Muretto" },
-  { src: "/muretto/renders/interior-cocina.jpg", alt: "Cocina de un departamento Muretto" },
-  { src: "/muretto/renders/exterior-noche.jpg", alt: "Vista nocturna de Muretto" },
+  { src: "/muretto/renders/hero-entrada.jpg", alt: "Acceso principal de Muretto al atardecer" },
+  { src: "/muretto/renders/alberca-jardin.jpg", alt: "Alberca y jardín de Muretto al anochecer" },
+  { src: "/muretto/renders/fachada-estacionamiento.jpg", alt: "Fachada de Muretto y estacionamiento techado" },
   { src: "/muretto/renders/fachada-detalle.jpg", alt: "Detalle de fachada de Muretto" },
 ];
 
@@ -107,8 +104,8 @@ export default function MurettoPage() {
       {/* HERO */}
       <section className="relative h-[92vh] min-h-[640px] flex items-end">
         <Image
-          src="/muretto/renders/hero-fachada.jpg"
-          alt="Fachada principal de Muretto en Temozón Norte, Mérida"
+          src="/muretto/renders/hero-entrada.jpg"
+          alt="Acceso principal de Muretto en Temozón Norte, Mérida"
           fill
           priority
           className="object-cover"
@@ -164,10 +161,10 @@ export default function MurettoPage() {
       {/* SOBRE EL PROYECTO */}
       <section id="proyecto" className="scroll-mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="relative aspect-[4/5] rounded-xl2 overflow-hidden shadow-popover">
+          <div className="relative aspect-[4/3] rounded-xl2 overflow-hidden shadow-popover">
             <Image
-              src="/muretto/renders/interior-sala.jpg"
-              alt="Interior de un departamento Muretto"
+              src="/muretto/renders/fachada-detalle.jpg"
+              alt="Detalle de fachada de Muretto"
               fill
               className="object-cover"
             />
@@ -219,10 +216,10 @@ export default function MurettoPage() {
                 ))}
               </div>
             </div>
-            <div className="order-1 lg:order-2 relative aspect-[4/5] rounded-xl2 overflow-hidden shadow-popover">
+            <div className="order-1 lg:order-2 relative aspect-[4/3] rounded-xl2 overflow-hidden shadow-popover">
               <Image
-                src="/muretto/renders/alberca-rooftop.jpg"
-                alt="Alberca y roof top de Muretto"
+                src="/muretto/renders/alberca-jardin.jpg"
+                alt="Alberca y jardín de Muretto"
                 fill
                 className="object-cover"
               />
@@ -239,14 +236,9 @@ export default function MurettoPage() {
         <h2 className="text-3xl sm:text-4xl font-bold text-calume-navy leading-tight text-center mb-12">
           Conoce Muretto
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-          {GALERIA.map((img, i) => (
-            <div
-              key={img.src}
-              className={`relative rounded-xl2 overflow-hidden group ${
-                i === 0 ? "col-span-2 row-span-2 aspect-square" : "aspect-square"
-              }`}
-            >
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+          {GALERIA.map((img) => (
+            <div key={img.src} className="relative aspect-[4/3] rounded-xl2 overflow-hidden group">
               <Image
                 src={img.src}
                 alt={img.alt}
